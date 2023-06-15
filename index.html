@@ -1,8 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Margenes</title>
+  <title>Calculadoras</title>
+  <style>
+    body {
+      background-color: #F2E5B7;
+    }
+    .calculator {
+      margin-bottom: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h1>Márgen y Equivalencia</h1>
+    <label for="precio-venta">Precio Venta:</label>
+    <input type="text" id="precio-venta" placeholder="Ingrese el precio de venta (ej. 100,000)">
+    <br><br>
+    <label for="utilidad">Utilidad:</label>
+    <input type="text" id="utilidad" placeholder="Ingrese la utilidad (ej. 20,000)">
+    <br><br>
+    <label for="margen-utilidad">Margen de utilidad (%):</label>
+    <input type="text" id="margen-utilidad" readonly>
+    <br><br>
+    <label for="margen-ajustado">Margen Ajustado (%):</label>
+    <input type="text" id="margen-ajustado" placeholder="Ingrese el margen ajustado (ej. 10)">
+    <br><br>
+    <label for="equivalencia">Equivalencia (%):</label>
+    <input type="text" id="equivalencia" readonly>
+    <br><br>
+    <label for="precio-venta-ajustado">Precio Venta Ajustado:</label>
+    <input type="text" id="precio-venta-ajustado" readonly>
+  </div>
+
+  <div class="calculator">
+    <h1>Cálculo de Fee y Comisiones</h1>
+    <label for="venta-total">Venta Total sin IVA:</label>
+    <input type="number" step="0.01" id="venta-total">
+    <br><br>
+    <label for="tipo">Tipo:</label>
+    <select id="tipo">
+      <option value="Fee Nuba">Fee Nuba</option>
+      <option value="Fee Virtuoso">Fee Virtuoso</option>
+      <option value="Comisión de tarjeta de crédito">Comisión de tarjeta de crédito</option>
+    </select>
+    <br><br>
+    <label for="porcentaje">Porcentaje:</label>
+    <input type="text" id="porcentaje" readonly>
+    <br><br>
+    <label for="linea-adicional">Línea Adicional sin IVA:</label>
+    <input type="text" id="linea-adicional" readonly>
+    <br><br>
+    <label for="venta-total-ajustada-sin-iva">Venta Total Ajustada sin IVA:</label>
+    <input type="text" id="venta-total-ajustada-sin-iva" readonly>
+    <br><br>
+    <label for="venta-total-ajustada-con-iva">Venta Total Ajustada con IVA:</label>
+    <input type="text" id="venta-total-ajustada-con-iva" readonly>
+  </div>
+
   <script>
+    // Código del primer tool
     window.addEventListener('DOMContentLoaded', (event) => {
       // Obtener los elementos de entrada
       const precioVentaInput = document.getElementById('precio-venta');
@@ -29,34 +86,48 @@
         precioVentaAjustadoInput.value = precioVentaAjustado.toFixed(2);
       }
     });
+
+    // Código del segundo tool
+    window.addEventListener('DOMContentLoaded', (event) => {
+      // Obtener los elementos de entrada
+      const ventaTotalInput = document.getElementById('venta-total');
+      const tipoSelect = document.getElementById('tipo');
+      const porcentajeInput = document.getElementById('porcentaje');
+      const lineaAdicionalInput = document.getElementById('linea-adicional');
+      const ventaTotalAjustadaSinIVAInput = document.getElementById('venta-total-ajustada-sin-iva');
+      const ventaTotalAjustadaConIVAInput = document.getElementById('venta-total-ajustada-con-iva');
+
+      // Escuchar el evento de cambio en los campos de entrada
+      ventaTotalInput.addEventListener('input', calcularValores);
+      tipoSelect.addEventListener('change', calcularValores);
+
+      function calcularValores() {
+        const ventaTotal = parseFloat(ventaTotalInput.value);
+        const tipo = tipoSelect.value;
+        let porcentaje = 0;
+        let lineaAdicional = 0;
+
+        if (tipo === 'Fee Nuba') {
+          porcentaje = 3;
+          lineaAdicional = ventaTotal * (porcentaje / 100);
+        } else if (tipo === 'Fee Virtuoso') {
+          porcentaje = 2;
+          lineaAdicional = ventaTotal * (porcentaje / 100);
+        } else if (tipo === 'Comisión de tarjeta de crédito') {
+          porcentaje = 2.5;
+          lineaAdicional = ventaTotal * (porcentaje / 100);
+        }
+
+        porcentajeInput.value = porcentaje.toFixed(2);
+        lineaAdicionalInput.value = lineaAdicional.toFixed(2);
+
+        const ventaTotalAjustadaSinIVA = ventaTotal + lineaAdicional;
+        ventaTotalAjustadaSinIVAInput.value = ventaTotalAjustadaSinIVA.toFixed(2);
+
+        const ventaTotalAjustadaConIVA = ventaTotalAjustadaSinIVA * 1.13;
+        ventaTotalAjustadaConIVAInput.value = ventaTotalAjustadaConIVA.toFixed(2);
+      }
+    });
   </script>
-  <style>
-    body {
-      background-color: #F2E5B7;
-    }
-    .error {
-      color: red;
-    }
-  </style>
-</head>
-<body>
-  <h1>Márgen y Equivalencia</h1>
-  <label for="precio-venta">Precio Venta:</label>
-  <input type="text" id="precio-venta" placeholder="Ingrese el precio de venta (ej. 100,000)">
-  <br><br>
-  <label for="utilidad">Utilidad:</label>
-  <input type="text" id="utilidad" placeholder="Ingrese la utilidad (ej. 20,000)">
-  <br><br>
-  <label for="margen-utilidad">Margen de utilidad (%):</label>
-  <input type="text" id="margen-utilidad" readonly>
-  <br><br>
-  <label for="margen-ajustado">Margen Ajustado (%):</label>
-  <input type="text" id="margen-ajustado" placeholder="Ingrese el margen ajustado (ej. 10)">
-  <br><br>
-  <label for="equivalencia">Equivalencia (%):</label>
-  <input type="text" id="equivalencia" readonly>
-  <br><br>
-  <label for="precio-venta-ajustado">Precio Venta Ajustado:</label>
-  <input type="text" id="precio-venta-ajustado" readonly>
 </body>
 </html>
