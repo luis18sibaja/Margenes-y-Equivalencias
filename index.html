@@ -1,67 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Calculadoras</title>
+  <title>Calculadora de Margen y Equivalencia</title>
   <style>
     body {
       background-color: #F2E5B7;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
     }
-    .calculator {
-      margin-bottom: 50px;
+
+    .container {
+      background-color: #FFF;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
     }
   </style>
-</head>
-<body>
-  <div class="calculator">
-    <h1>Márgen y Equivalencia</h1>
-    <label for="precio-venta">Precio Venta:</label>
-    <input type="text" id="precio-venta" placeholder="Ingrese el precio de venta (ej. 100,000)">
-    <br><br>
-    <label for="utilidad">Utilidad:</label>
-    <input type="text" id="utilidad" placeholder="Ingrese la utilidad (ej. 20,000)">
-    <br><br>
-    <label for="margen-utilidad">Margen de utilidad (%):</label>
-    <input type="text" id="margen-utilidad" readonly>
-    <br><br>
-    <label for="margen-ajustado">Margen Ajustado (%):</label>
-    <input type="text" id="margen-ajustado" placeholder="Ingrese el margen ajustado (ej. 10)">
-    <br><br>
-    <label for="equivalencia">Equivalencia (%):</label>
-    <input type="text" id="equivalencia" readonly>
-    <br><br>
-    <label for="precio-venta-ajustado">Precio Venta Ajustado:</label>
-    <input type="text" id="precio-venta-ajustado" readonly>
-  </div>
-
-  <div class="calculator">
-    <h1>Cálculo de Fee y Comisiones</h1>
-    <label for="venta-total">Venta Total sin IVA:</label>
-    <input type="number" step="0.01" id="venta-total">
-    <br><br>
-    <label for="tipo">Tipo:</label>
-    <select id="tipo">
-      <option value="Fee Nuba">Fee Nuba</option>
-      <option value="Fee Virtuoso">Fee Virtuoso</option>
-      <option value="Comisión de tarjeta de crédito">Comisión de tarjeta de crédito</option>
-    </select>
-    <br><br>
-    <label for="porcentaje">Porcentaje:</label>
-    <input type="text" id="porcentaje" readonly>
-    <br><br>
-    <label for="linea-adicional">Línea Adicional sin IVA:</label>
-    <input type="text" id="linea-adicional" readonly>
-    <br><br>
-    <label for="venta-total-ajustada-sin-iva">Venta Total Ajustada sin IVA:</label>
-    <input type="text" id="venta-total-ajustada-sin-iva" readonly>
-    <br><br>
-    <label for="venta-total-ajustada-con-iva">Venta Total Ajustada con IVA:</label>
-    <input type="text" id="venta-total-ajustada-con-iva" readonly>
-  </div>
-
   <script>
-    // Código del primer tool
     window.addEventListener('DOMContentLoaded', (event) => {
-      // Obtener los elementos de entrada
+      // Obtener los elementos de entrada para la calculadora de margen y equivalencia
       const precioVentaInput = document.getElementById('precio-venta');
       const utilidadInput = document.getElementById('utilidad');
       const margenUtilidadInput = document.getElementById('margen-utilidad');
@@ -80,16 +56,13 @@
         const margenUtilidad = (utilidad / precioVenta) * 100;
         margenUtilidadInput.value = margenUtilidad.toFixed(2);
         const margenAjustado = parseFloat(margenAjustadoInput.value.replace(',', ''));
-        const equivalencia = 1 - (((precioVenta - utilidad) / (1 - (margenAjustado/100))) / precioVenta);
+        const equivalencia = 1 - (((precioVenta - utilidad) / (1 - (margenAjustado / 100))) / precioVenta);
         equivalenciaInput.value = (equivalencia * 100).toFixed(2);
-        const precioVentaAjustado = (precioVenta * (1 - (margenUtilidad/100))) / (1 - (margenAjustado/100));
+        const precioVentaAjustado = (precioVenta * (1 - (margenUtilidad / 100))) / (1 - (margenAjustado / 100));
         precioVentaAjustadoInput.value = precioVentaAjustado.toFixed(2);
       }
-    });
 
-    // Código del segundo tool
-    window.addEventListener('DOMContentLoaded', (event) => {
-      // Obtener los elementos de entrada
+      // Obtener los elementos de entrada para la calculadora de fee y comisiones
       const ventaTotalInput = document.getElementById('venta-total');
       const tipoSelect = document.getElementById('tipo');
       const porcentajeInput = document.getElementById('porcentaje');
@@ -129,5 +102,53 @@
       }
     });
   </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Margen y Equivalencia</h1>
+    <label for="precio-venta">Precio Venta:</label>
+    <input type="text" id="precio-venta" placeholder="Ingrese el precio de venta (ej. 100,000)">
+    <br><br>
+    <label for="utilidad">Utilidad:</label>
+    <input type="text" id="utilidad" placeholder="Ingrese la utilidad (ej. 20,000)">
+    <br><br>
+    <label for="margen-utilidad">Margen de utilidad (%):</label>
+    <input type="text" id="margen-utilidad" readonly>
+    <br><br>
+    <label for="margen-ajustado">Margen Ajustado (%):</label>
+    <input type="text" id="margen-ajustado" placeholder="Ingrese el margen ajustado (ej. 10)">
+    <br><br>
+    <label for="equivalencia">Equivalencia (%):</label>
+    <input type="text" id="equivalencia" readonly>
+    <br><br>
+    <label for="precio-venta-ajustado">Precio Venta Ajustado:</label>
+    <input type="text" id="precio-venta-ajustado" readonly>
+  </div>
+
+  <div class="container">
+    <h1>Calculadora de Fee y Comisiones</h1>
+    <label for="venta-total">Venta Total sin IVA:</label>
+    <input type="number" step="0.01" id="venta-total">
+    <br><br>
+    <label for="tipo">Tipo:</label>
+    <select id="tipo">
+      <option value=""></option>
+      <option value="Fee Nuba">Fee Nuba</option>
+      <option value="Fee Virtuoso">Fee Virtuoso</option>
+      <option value="Comisión de tarjeta de crédito">Comisión de tarjeta de crédito</option>
+    </select>
+    <br><br>
+    <label for="porcentaje">Porcentaje:</label>
+    <input type="text" id="porcentaje" readonly>
+    <br><br>
+    <label for="linea-adicional">Línea Adicional:</label>
+    <input type="text" id="linea-adicional" readonly>
+    <br><br>
+    <label for="venta-total-ajustada-sin-iva">Venta Total Ajustada sin IVA:</label>
+    <input type="text" id="venta-total-ajustada-sin-iva" readonly>
+    <br><br>
+    <label for="venta-total-ajustada-con-iva">Venta Total Ajustada con IVA:</label>
+    <input type="text" id="venta-total-ajustada-con-iva" readonly>
+  </div>
 </body>
 </html>
