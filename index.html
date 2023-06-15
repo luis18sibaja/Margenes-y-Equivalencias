@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Margenes y Equivalencias</title>
+  <title>Margenes</title>
   <script>
     window.addEventListener('DOMContentLoaded', (event) => {
       // Obtener los elementos de entrada
@@ -10,6 +10,7 @@
       const margenUtilidadInput = document.getElementById('margen-utilidad');
       const margenAjustadoInput = document.getElementById('margen-ajustado');
       const equivalenciaInput = document.getElementById('equivalencia');
+      const precioVentaAjustadoInput = document.getElementById('precio-venta-ajustado');
 
       // Escuchar el evento de cambio en los campos de entrada
       precioVentaInput.addEventListener('input', calcularMargenes);
@@ -24,6 +25,8 @@
         const margenAjustado = parseFloat(margenAjustadoInput.value.replace(',', ''));
         const equivalencia = 1 - (((precioVenta - utilidad) / (1 - (margenAjustado/100))) / precioVenta);
         equivalenciaInput.value = (equivalencia * 100).toFixed(2);
+        const precioVentaAjustado = (precioVenta * (1 - (margenUtilidad/100))) / (1 - (margenAjustado/100));
+        precioVentaAjustadoInput.value = precioVentaAjustado.toFixed(2);
       }
     });
   </script>
@@ -34,7 +37,7 @@
   </style>
 </head>
 <body>
-  <h1>Márgenes</h1>
+  <h1>Márgenes y Equvalencias</h1>
   <label for="precio-venta">Precio Venta:</label>
   <input type="text" id="precio-venta" placeholder="Ingrese el precio de venta (ej. 100,000)">
   <br><br>
@@ -49,5 +52,8 @@
   <br><br>
   <label for="equivalencia">Equivalencia (%):</label>
   <input type="text" id="equivalencia" readonly>
+  <br><br>
+  <label for="precio-venta-ajustado">Precio Venta Ajustado:</label>
+  <input type="text" id="precio-venta-ajustado" readonly>
 </body>
 </html>
