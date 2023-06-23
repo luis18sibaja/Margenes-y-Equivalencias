@@ -152,6 +152,31 @@
       document.getElementById("comision-tarjeta-credito").addEventListener("change", calcularComisiones);
 
 
+      // Obtener los elementos de entrada
+     const resortFee1Input = document.getElementById('ResortFee1');
+     const resortFee2Input = document.getElementById('ResortFee2');
+     const resortFee3Input = document.getElementById('ResortFee3');
+     const resortFee4Input = document.getElementById('ResortFee4');
+
+     // Escuchar el evento de cambio en los campos de Fee
+     resortFee1Input.addEventListener('input', sumarFees);
+     resortFee2Input.addEventListener('input', sumarFees);
+     resortFee3Input.addEventListener('input', sumarFees);
+     resortFee4Input.addEventListener('input', sumarFees);
+
+    function sumarFees() {
+      // Obtener los valores de los campos de Fee
+      const fee1 = parseFloat(resortFee1Input.value) || 0;
+      const fee2 = parseFloat(resortFee2Input.value) || 0;
+      const fee3 = parseFloat(resortFee3Input.value) || 0;
+      const fee4 = parseFloat(resortFee4Input.value) || 0;
+
+      // Calcular la suma de los campos de Fee
+      const sumaFee = fee1 + fee2 + fee3 + fee4;
+
+      // Actualizar el valor del campo de Suma Fee
+      document.getElementById('SumaFee').value = sumaFee.toFixed(2);
+    }
 
 
       // Función para copiar el contenido del campo de texto
@@ -170,8 +195,6 @@
       });
 
       
-
-
       
      // Función para pegar el contenido copiado en el campo de texto activo
      function pegarContenido(inputId) {
@@ -180,7 +203,7 @@
          input.value = copiedText;
        });
      }
-
+    
 
      // Crear botón de pegar y asociarle la función correspondiente
      const botonesPegar = document.querySelectorAll('.boton-pegar');
@@ -188,8 +211,6 @@
        const inputId = boton.dataset.inputId;
        boton.addEventListener('click', () => pegarContenido(inputId));
      });
-
-
 
 
      // Obtener los elementos de entrada
@@ -226,32 +247,7 @@
 
 
 
-      // Obtener los elementos de entrada
-     const resortFee1Input = document.getElementById('ResortFee1');
-     const resortFee2Input = document.getElementById('ResortFee2');
-     const resortFee3Input = document.getElementById('ResortFee3');
-     const resortFee4Input = document.getElementById('ResortFee4');
-
-     // Escuchar el evento de cambio en los campos de Fee
-     resortFee1Input.addEventListener('input', sumarFees);
-     resortFee2Input.addEventListener('input', sumarFees);
-     resortFee3Input.addEventListener('input', sumarFees);
-     resortFee4Input.addEventListener('input', sumarFees);
-
-    function sumarFees() {
-      // Obtener los valores de los campos de Fee
-      const fee1 = parseFloat(resortFee1Input.value) || 0;
-      const fee2 = parseFloat(resortFee2Input.value) || 0;
-      const fee3 = parseFloat(resortFee3Input.value) || 0;
-      const fee4 = parseFloat(resortFee4Input.value) || 0;
-
-      // Calcular la suma de los campos de Fee
-      const sumaFee = fee1 + fee2 + fee3 + fee4;
-
-      // Actualizar el valor del campo de Suma Fee
-      document.getElementById('SumaFee').value = sumaFee.toFixed(2);
-    }
-
+     
 
 
 
@@ -354,23 +350,23 @@
     <h1>Suma de Resort Fee</h1>
     <label for="ResortFee1">Resort Fee 1 ($):</label>
     <input type="text" id="ResortFee1">
-    <button class="boton-pegar" data-input-id="ResortFee1">Pegar</button>
+    //<button class="boton-pegar" data-input-id="ResortFee1">Pegar</button>
  
 
     <br><br>
     <label for="ResortFee2">Resort fee 2 ($):</label>
     <input type="text" id="ResortFee2">
-    <button class="boton-pegar" data-input-id="ResortFee2">Pegar</button>
+    //<button class="boton-pegar" data-input-id="ResortFee2">Pegar</button>
 
     <br><br>
     <label for="ResortFee3">Resort fee 3 ($):</label>
     <input type="text" id="ResortFee3">
-    <button class="boton-pegar" data-input-id="ResortFee3">Pegar</button>
+    //<button class="boton-pegar" data-input-id="ResortFee3">Pegar</button>
 
     <br><br>
     <label for="ResortFee4">Resort fee 4 ($):</label>
     <input type="text" id="ResortFee4">
-    <button class="boton-pegar" data-input-id="ResortFee4">Pegar</button>
+    //<button class="boton-pegar" data-input-id="ResortFee4">Pegar</button>
 
     <br><br>
     <label for="SumaFee">Linea total de Resort Fee ($):</label>
@@ -382,4 +378,3 @@
 
 </body>
 </html>
-
