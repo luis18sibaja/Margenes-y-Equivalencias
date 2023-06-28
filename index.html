@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Herramientas de Cálculo</title>
+  <title>Herramientas de Cálculos</title>
   <style>
     body {
       background-color: #000000;
@@ -30,6 +30,13 @@
       margin-bottom: 20px;
       display: none;
     }
+    
+     .container4 {
+      background-color: #F4D84B;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: block;
+    }
 
     h1 {
       margin-top: 0;
@@ -47,16 +54,25 @@
       background-color: #D8B244 ; /* Color de fondo */
       color: Black; /* Color del texto */
     }
+
     .boton2 {
       font-size: 17px; /* Tamaño de la letra */
       padding: 10px 20px; /* Espaciado dentro del botón */
       background-color: #FFA20A ; /* Color de fondo */
       color: Black; /* Color del texto */
     }
+
     .boton3 {
       font-size: 17px; /* Tamaño de la letra */
       padding: 10px 20px; /* Espaciado dentro del botón */
       background-color: #FF760A ; /* Color de fondo */
+      color: Black; /* Color del texto */
+    }
+
+    .boton4 {
+      font-size: 17px; /* Tamaño de la letra */
+      padding: 10px 20px; /* Espaciado dentro del botón */
+      background-color: #F4D84B ; /* Color de fondo */
       color: Black; /* Color del texto */
     }
 
@@ -77,35 +93,19 @@
       box-sizing: border-box;
     }
   </style>
+</head>
+<body>
   <script>
-  window.addEventListener('DOMContentLoaded', (event) => {
+  document.addEventListener('DOMContentLoaded', (event) => {
 
-  // Obtener los elementos de entrada
-    const PreciohospedajeInput = document.getElementById('precio-hospedaje');
-    const FeeInput = document.getElementById('Fee');
+  // 1 Tool que calcula el Fee
+     const precioVentaInput = document.getElementById('precio-venta');
+     const utilidadInput = document.getElementById('utilidad');
+     const margenAjustadoInput = document.getElementById('margen-ajustado');
+     const margenUtilidadInput = document.getElementById('margen-utilidad');
+     const equivalenciaInput = document.getElementById('equivalencia');
+     const precioVentaAjustadoInput = document.getElementById('precio-venta-ajustado');
 
-    // Escuchar el evento de cambio en los campos de entrada
-    PreciohospedajeInput.addEventListener('input', CalcularFee);
-    FeeInput.addEventListener('input', CalcularFee);
-
-    function CalcularFee() {
-      var precioHospedaje = parseFloat(PreciohospedajeInput.value.replace(',', ''));
-      var fee = parseFloat(FeeInput.value.replace(',', ''));
-    
-      var lineaAdicionalComisionFee = precioHospedaje * (fee / 100);
-    
-      document.getElementById("ResortFee").value = lineaAdicionalComisionFee.toFixed(2);
-    }
-
-    // Obtener los elementos de entrada
-    const precioVentaInput = document.getElementById('precio-venta');
-    const utilidadInput = document.getElementById('utilidad');
-    const margenAjustadoInput = document.getElementById('margen-ajustado');
-    const margenUtilidadInput = document.getElementById('margen-utilidad');
-    const equivalenciaInput = document.getElementById('equivalencia');
-    const precioVentaAjustadoInput = document.getElementById('precio-venta-ajustado');
-
-    // Escuchar el evento de cambio en los campos de entrada
      precioVentaInput.addEventListener('input', calcularMargenes);
      utilidadInput.addEventListener('input', calcularMargenes);
      margenAjustadoInput.addEventListener('input', calcularMargenes);
@@ -120,66 +120,136 @@
        equivalenciaInput.value = (equivalencia * 100).toFixed(2);
        const precioVentaAjustado = (precioVenta * (1 - (margenUtilidad / 100))) / (1 - (margenAjustado / 100));
        precioVentaAjustadoInput.value = precioVentaAjustado.toFixed(2);
-      }
+     }
 
-    // Función para calcular las comisiones
-      function calcularComisiones() {
-        var ventaTotal = parseFloat(document.getElementById("venta-total").value);
-        var comisionNuba = document.getElementById("comision-nuba").value;
-        var comisionVirtuoso = document.getElementById("comision-virtuoso").value;
-        var comisionTarjetaCredito = document.getElementById("comision-tarjeta-credito").value;
-        var porcentajeComisionNuba = comisionNuba === "Sí" ? 0.02 : 0;
-        var porcentajeComisionVirtuoso = comisionVirtuoso === "Sí" ? 0.03 : 0;
-        var porcentajeComisionTarjetaCredito = comisionTarjetaCredito === "Sí" ? 0.025 : 0;
+   // 2 Tool que calcula comisiones
+     function calcularComisiones() {
+       var ventaTotal = parseFloat(document.getElementById("venta-total").value);
+       var comisionNuba = document.getElementById("comision-nuba").value;
+       var comisionVirtuoso = document.getElementById("comision-virtuoso").value;
+       var comisionTarjetaCredito = document.getElementById("comision-tarjeta-credito").value;
+       var porcentajeComisionNuba = comisionNuba === "Sí" ? 0.03 : 0;
+       var porcentajeComisionVirtuoso = comisionVirtuoso === "Sí" ? 0.02 : 0;
+       var porcentajeComisionTarjetaCredito = comisionTarjetaCredito === "Sí" ? 0.025 : 0;
         
-        var ventaTotalAjustadaSinIVA = ventaTotal / (1 - (porcentajeComisionNuba + porcentajeComisionVirtuoso + porcentajeComisionTarjetaCredito));
-        var lineaAdicionalComisionNuba = ventaTotalAjustadaSinIVA * porcentajeComisionNuba;
-        var lineaAdicionalComisionVirtuoso = ventaTotalAjustadaSinIVA * porcentajeComisionVirtuoso;
-        var lineaAdicionalComisionTarjetaCredito = ventaTotalAjustadaSinIVA * porcentajeComisionTarjetaCredito;
+       var ventaTotalAjustadaSinIVA = ventaTotal / (1 - (porcentajeComisionNuba + porcentajeComisionVirtuoso + porcentajeComisionTarjetaCredito));
+       var lineaAdicionalComisionNuba = ventaTotalAjustadaSinIVA * porcentajeComisionNuba;
+       var lineaAdicionalComisionVirtuoso = ventaTotalAjustadaSinIVA * porcentajeComisionVirtuoso;
+       var lineaAdicionalComisionTarjetaCredito = ventaTotalAjustadaSinIVA * porcentajeComisionTarjetaCredito;
 
-        document.getElementById("porcentaje-comision-nuba").value = (porcentajeComisionNuba * 100).toFixed(2) + "%";
-        document.getElementById("porcentaje-comision-virtuoso").value = (porcentajeComisionVirtuoso * 100).toFixed(2) + "%";
-        document.getElementById("porcentaje-comision-tarjeta-credito").value = (porcentajeComisionTarjetaCredito * 100).toFixed(2) + "%";
-        document.getElementById("venta-total-ajustada-sin-iva").value = ventaTotalAjustadaSinIVA.toFixed(2);
-        document.getElementById("linea-adicional-comision-nuba").value = lineaAdicionalComisionNuba.toFixed(2);
-        document.getElementById("linea-adicional-comision-virtuoso").value = lineaAdicionalComisionVirtuoso.toFixed(2);
-        document.getElementById("linea-adicional-comision-tarjeta-credito").value = lineaAdicionalComisionTarjetaCredito.toFixed(2);
-      }
+       document.getElementById("porcentaje-comision-nuba").value = (porcentajeComisionNuba * 100).toFixed(2) + "%";
+       document.getElementById("porcentaje-comision-virtuoso").value = (porcentajeComisionVirtuoso * 100).toFixed(2) + "%";
+       document.getElementById("porcentaje-comision-tarjeta-credito").value = (porcentajeComisionTarjetaCredito * 100).toFixed(2) + "%";
+       document.getElementById("venta-total-ajustada-sin-iva").value = ventaTotalAjustadaSinIVA.toFixed(2);
+       document.getElementById("linea-adicional-comision-nuba").value = lineaAdicionalComisionNuba.toFixed(2);
+       document.getElementById("linea-adicional-comision-virtuoso").value = lineaAdicionalComisionVirtuoso.toFixed(2);
+       document.getElementById("linea-adicional-comision-tarjeta-credito").value = lineaAdicionalComisionTarjetaCredito.toFixed(2);
+     }
+   
+     // Asignar el evento onchange a los elementos select
+     document.getElementById("comision-nuba").addEventListener("change", calcularComisiones);
+     document.getElementById("comision-virtuoso").addEventListener("change", calcularComisiones);
+     document.getElementById("comision-tarjeta-credito").addEventListener("change", calcularComisiones);
 
-      // Asignar el evento onchange a los elementos select
-      document.getElementById("comision-nuba").addEventListener("change", calcularComisiones);
-      document.getElementById("comision-virtuoso").addEventListener("change", calcularComisiones);
-      document.getElementById("comision-tarjeta-credito").addEventListener("change", calcularComisiones);
+  // 3 Tool que calcula el Fee
+     const PreciohospedajeInput = document.getElementById('precio-hospedaje');
+     const FeeInput = document.getElementById('Fee');
 
+     PreciohospedajeInput.addEventListener('input', CalcularFee);
+     FeeInput.addEventListener('input', CalcularFee);
 
-      // Obtener los elementos de entrada
+     function CalcularFee() {
+       var precioHospedaje = parseFloat(PreciohospedajeInput.value.replace(',', ''));
+       var fee = parseFloat(FeeInput.value.replace(',', ''));
+
+       var lineaAdicionalComisionFee = precioHospedaje * (fee / 100);
+    
+       document.getElementById("ResortFee").value = lineaAdicionalComisionFee.toFixed(2);
+     }
+
      const resortFee1Input = document.getElementById('ResortFee1');
      const resortFee2Input = document.getElementById('ResortFee2');
      const resortFee3Input = document.getElementById('ResortFee3');
      const resortFee4Input = document.getElementById('ResortFee4');
 
-     // Escuchar el evento de cambio en los campos de Fee
      resortFee1Input.addEventListener('input', sumarFees);
      resortFee2Input.addEventListener('input', sumarFees);
      resortFee3Input.addEventListener('input', sumarFees);
      resortFee4Input.addEventListener('input', sumarFees);
 
-    function sumarFees() {
-      // Obtener los valores de los campos de Fee
-      const fee1 = parseFloat(resortFee1Input.value) || 0;
-      const fee2 = parseFloat(resortFee2Input.value) || 0;
-      const fee3 = parseFloat(resortFee3Input.value) || 0;
-      const fee4 = parseFloat(resortFee4Input.value) || 0;
+     function sumarFees() {
+        const fee1 = parseFloat(resortFee1Input.value) || 0;
+        const fee2 = parseFloat(resortFee2Input.value) || 0;
+        const fee3 = parseFloat(resortFee3Input.value) || 0;
+        const fee4 = parseFloat(resortFee4Input.value) || 0;
+        const sumaFee = fee1 + fee2 + fee3 + fee4;
 
-      // Calcular la suma de los campos de Fee
-      const sumaFee = fee1 + fee2 + fee3 + fee4;
-
-      // Actualizar el valor del campo de Suma Fee
-      document.getElementById('SumaFee').value = sumaFee.toFixed(2);
-    }
+        document.getElementById('SumaFee').value = sumaFee.toFixed(2);
+      }
 
 
-      // Función para copiar el contenido del campo de texto
+   // 4 Tool que calcula precios
+      const ventaTotalpInput = document.getElementById('venta-totalp');
+      const margenUtilidadpInput = document.getElementById('margen-utilidadp');
+      var sinIvaInput = document.getElementById('sin-iva');
+      var conIvaInput = document.getElementById('con-iva');
+
+      ventaTotalpInput.addEventListener('input', calcularPrecios);
+      margenUtilidadpInput.addEventListener('input', calcularPrecios);
+
+      function calcularPrecios() {
+        const ventaTotalp = parseFloat(ventaTotalpInput.value);
+        const margenUtilidadp = parseFloat(margenUtilidadpInput.value);
+        
+         var sinIva = ventaTotalp / (1 - (margenUtilidadp / 100));
+         var conIva = sinIva * 1.13;
+
+         sinIvaInput.value = sinIva.toFixed(2);
+         conIvaInput.value = conIva.toFixed(2);
+      }
+    
+   // Botónes
+
+   // Botón de mostrar ventanas
+      const web1Container = document.getElementById('Margen-Equivalencia');
+      const web2Container = document.getElementById('Calculo-Comisiones');
+      const web3Container = document.getElementById('Calculo-Fee');
+      const web4Container = document.getElementById('Calculo-Precio');
+
+      const web1Button = document.getElementById('Margen-button');
+      const web2Button = document.getElementById('Comisión-button');
+      const web3Button = document.getElementById('Fee-button');
+      const web4Button = document.getElementById('Precios-button');
+
+      web1Button.addEventListener('click', () => {
+        web1Container.style.display = 'block';
+        web2Container.style.display = 'none';
+        web3Container.style.display = 'none';
+        web4Container.style.display = 'none';
+      });
+
+      web2Button.addEventListener('click', () => {
+        web1Container.style.display = 'none';
+        web2Container.style.display = 'block';
+        web3Container.style.display = 'none';
+        web4Container.style.display = 'none';
+      });
+
+      web3Button.addEventListener('click', () => {
+        web1Container.style.display = 'none';
+        web2Container.style.display = 'none';
+        web3Container.style.display = 'block';
+        web4Container.style.display = 'none';
+      });
+
+      web4Button.addEventListener('click', () => {
+        web1Container.style.display = 'none';
+        web2Container.style.display = 'none';
+        web3Container.style.display = 'none';
+        web4Container.style.display = 'block';
+      });
+
+   // Botón de copiar contenido
       function copiarContenido(inputId) {
         const input = document.getElementById(inputId);
         input.select();
@@ -194,72 +264,28 @@
         boton.addEventListener('click', () => copiarContenido(inputId));
       });
 
-      
-      
-     // Función para pegar el contenido copiado en el campo de texto activo
-     function pegarContenido(inputId) {
-       const input = document.getElementById(inputId);
-       navigator.clipboard.readText().then((copiedText) => {
-         input.value = copiedText;
-       });
-     }
+     const copiaButtons = document.querySelectorAll('.boton-copia');
+
+     copiaButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const inputId = button.getAttribute('data-input-id');
+          const input = document.getElementById(inputId);
     
-
-     // Crear botón de pegar y asociarle la función correspondiente
-     const botonesPegar = document.querySelectorAll('.boton-pegar');
-     botonesPegar.forEach((boton) => {
-       const inputId = boton.dataset.inputId;
-       boton.addEventListener('click', () => pegarContenido(inputId));
-     });
-
-
-     // Obtener los elementos de entrada
-      const web1Container = document.getElementById('Margen-Equivalencia');
-      const web2Container = document.getElementById('Calculo-Comisiones');
-      const web3Container = document.getElementById('Calculo-Fee');
-
-      const web1Button = document.getElementById('Margen-button');
-      const web2Button = document.getElementById('Comisión-button');
-      const web3Button = document.getElementById('Fee-button');
-
-      web1Container.style.display = 'block'
-
-      web1Button.addEventListener('click', () => {
-        web1Container.style.display = 'block';
-        web2Container.style.display = 'none';
-        web3Container.style.display = 'none';
+          input.select();
+          document.execCommand('copy');
+        });
       });
-
-      web2Button.addEventListener('click', () => {
-        web1Container.style.display = 'none';
-        web2Container.style.display = 'block';
-        web3Container.style.display = 'none';
-      });
-
-      web3Button.addEventListener('click', () => {
-        web1Container.style.display = 'none';
-        web2Container.style.display = 'none';
-        web3Container.style.display = 'block';
-      });
-
-
-
-
-
-
-     
-
-
 
   });
   </script>
-</head>
-<body>
+
   <h2>Herramientas de Cálculo</h2>
+
+  <button class="boton4" id="Precios-button">Precios</button>
   <button class="boton" id="Margen-button">Mergenes</button>
-  <button class="boton2" id="Comisión-button">Comisiones</button class="boton">
-  <button class="boton3" id="Fee-button">Resort Fee</button class="boton">
-  
+  <button class="boton2" id="Comisión-button">Comisiones</button>
+  <button class="boton3" id="Fee-button">Resort Fee</button>
+
   <div id="Margen-Equivalencia" class="container">
     <h1>Márgen y Equivalencia</h1>
     <label for="precio-venta">Precio Venta sin IVA ($):</label>
@@ -285,7 +311,7 @@
   <div id="Calculo-Comisiones" class="container2">
     <h1>Cálculo de Comisiones</h1>
     <label for="venta-total">Precio Venta sin IVA ($):</label>
-    <input type="number" step="0.01" id="venta-total" placeholder="Ingrese la Venta Total Sin IVA (ej. 1000)">
+    <input type="text" id="venta-total" placeholder="Ingrese la Venta Total Sin IVA (ej. 1000)">
     <br><br>
     <label for="comision-nuba">Comisión Nuba:</label>
     <select id="comision-nuba">
@@ -350,31 +376,38 @@
     <h1>Suma de Resort Fee</h1>
     <label for="ResortFee1">Resort Fee 1 ($):</label>
     <input type="text" id="ResortFee1">
-    
- 
-
     <br><br>
     <label for="ResortFee2">Resort fee 2 ($):</label>
     <input type="text" id="ResortFee2">
-    
-
     <br><br>
     <label for="ResortFee3">Resort fee 3 ($):</label>
     <input type="text" id="ResortFee3">
-    
-
     <br><br>
     <label for="ResortFee4">Resort fee 4 ($):</label>
     <input type="text" id="ResortFee4">
-    
-
     <br><br>
-    <label for="SumaFee">Linea total de Resort Fee ($):</label>
+    <label for="SumaFee">Línea total de Resort Fee ($):</label>
     <input type="text" id="SumaFee">
     <button class="boton-copia" data-input-id="SumaFee">Copiar</button>
+   </div>
+
+  <div id="Calculo-Precio" class="container4">
+    <h1>Precios de Venta ($)</h1>
+    <label for="venta-totalp">Costo sin IVA ($):</label>
+    <input type="text" id="venta-totalp" placeholder="Ingrese el Costo Total Sin IVA (ej. 1000)">
     <br><br>
-  <br><br>
-</div>
+    <label for="margen-utilidadp">Margen de utilidad (%):</label>
+    <input type="text" id="margen-utilidadp">
+    <br><br>
+    <label for="sin-iva">Precio Venta sin IVA ($):</label>
+    <input type="text" id="sin-iva" readonly>
+    <button class="boton-copia" data-input-id="sin-iva">Copiar</button>
+    <br><br>
+    <label for="con-iva">Precio Venta con 13% IVA ($):</label>
+    <input type="text" id="con-iva" readonly>
+    <button class="boton-copia" data-input-id="con-iva">Copiar</button>
+    <br><br>
+  </div>
 
 </body>
 </html>
