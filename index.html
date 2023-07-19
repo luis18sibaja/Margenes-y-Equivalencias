@@ -129,7 +129,7 @@
        var comisionVirtuoso = document.getElementById("comision-virtuoso").value;
        var comisionTarjetaCredito = document.getElementById("comision-tarjeta-credito").value;
        var porcentajeComisionNuba = comisionNuba === "Sí" ? 0.03 : 0;
-       var porcentajeComisionVirtuoso = comisionVirtuoso === "Sí" ? 0.02 : 0;
+       var porcentajeComisionVirtuoso = comisionVirtuoso === "Sí" ? 0.025 : 0;
        var porcentajeComisionTarjetaCredito = comisionTarjetaCredito === "Sí" ? 0.025 : 0;
         
        var ventaTotalAjustadaSinIVA = ventaTotal / (1 - (porcentajeComisionNuba + porcentajeComisionVirtuoso + porcentajeComisionTarjetaCredito));
@@ -283,7 +283,7 @@
   <h2>Herramientas de Cálculo</h2>
 
   <button class="boton4" id="Precios-button">Precios</button>
-  <button class="boton" id="Margen-button">Mergenes</button>
+  <button class="boton" id="Margen-button">Margenes</button>
   <button class="boton2" id="Comisión-button">Comisiones</button>
   <button class="boton3" id="Fee-button">Resort Fee</button>
 
