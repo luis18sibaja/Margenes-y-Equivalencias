@@ -122,33 +122,52 @@
        precioVentaAjustadoInput.value = precioVentaAjustado.toFixed(2);
      }
 
-   // 2 Tool que calcula comisiones
+  // 2 Tool que calcula comisiones
      function calcularComisiones() {
        var ventaTotal = parseFloat(document.getElementById("venta-total").value);
+       var comisionAgenteTexto = document.getElementById("comision-agente").value;
+       var comisionAgente = parseFloat(comisionAgenteTexto.replace(/[^\d.]/g, ''));
+
+       if (isNaN(comisionAgente) || comisionAgente < 0 || comisionAgente > 100) {
+          comisionAgente = 0;
+       } else {
+          comisionAgente /= 100;
+       }
        var comisionNuba = document.getElementById("comision-nuba").value;
        var comisionVirtuoso = document.getElementById("comision-virtuoso").value;
+       var comisionSmart = document.getElementById("comision-smart").value;
        var comisionTarjetaCredito = document.getElementById("comision-tarjeta-credito").value;
+
+       var porcentajeComisionAgente = comisionAgente;
        var porcentajeComisionNuba = comisionNuba === "Sí" ? 0.03 : 0;
        var porcentajeComisionVirtuoso = comisionVirtuoso === "Sí" ? 0.025 : 0;
+       var porcentajeComisionSmart = comisionSmart === "Sí" ? 0.12 : 0;
        var porcentajeComisionTarjetaCredito = comisionTarjetaCredito === "Sí" ? 0.025 : 0;
         
-       var ventaTotalAjustadaSinIVA = ventaTotal / (1 - (porcentajeComisionNuba + porcentajeComisionVirtuoso + porcentajeComisionTarjetaCredito));
+       var ventaTotalAjustadaSinIVA = ventaTotal / (1 - (porcentajeComisionAgente+porcentajeComisionNuba + porcentajeComisionVirtuoso + porcentajeComisionTarjetaCredito));
+       var lineaAdicionalComisionAgente = ventaTotalAjustadaSinIVA * porcentajeComisionAgente;
        var lineaAdicionalComisionNuba = ventaTotalAjustadaSinIVA * porcentajeComisionNuba;
        var lineaAdicionalComisionVirtuoso = ventaTotalAjustadaSinIVA * porcentajeComisionVirtuoso;
+       var lineaAdicionalComisionSmart = ventaTotalAjustadaSinIVA * porcentajeComisionSmart;
        var lineaAdicionalComisionTarjetaCredito = ventaTotalAjustadaSinIVA * porcentajeComisionTarjetaCredito;
 
        document.getElementById("porcentaje-comision-nuba").value = (porcentajeComisionNuba * 100).toFixed(2) + "%";
        document.getElementById("porcentaje-comision-virtuoso").value = (porcentajeComisionVirtuoso * 100).toFixed(2) + "%";
+       document.getElementById("porcentaje-comision-smart").value = (porcentajeComisionSmart * 100).toFixed(2) + "%";
        document.getElementById("porcentaje-comision-tarjeta-credito").value = (porcentajeComisionTarjetaCredito * 100).toFixed(2) + "%";
        document.getElementById("venta-total-ajustada-sin-iva").value = ventaTotalAjustadaSinIVA.toFixed(2);
+       document.getElementById("linea-adicional-comision-agente").value = lineaAdicionalComisionAgente.toFixed(2);
        document.getElementById("linea-adicional-comision-nuba").value = lineaAdicionalComisionNuba.toFixed(2);
        document.getElementById("linea-adicional-comision-virtuoso").value = lineaAdicionalComisionVirtuoso.toFixed(2);
+       document.getElementById("linea-adicional-comision-smart").value = lineaAdicionalComisionSmart.toFixed(2);
        document.getElementById("linea-adicional-comision-tarjeta-credito").value = lineaAdicionalComisionTarjetaCredito.toFixed(2);
      }
    
-     // Asignar el evento onchange a los elementos select
+     // Asignar el evento change a los elementos select
+     document.getElementById("comision-agente").addEventListener("change", calcularComisiones);
      document.getElementById("comision-nuba").addEventListener("change", calcularComisiones);
      document.getElementById("comision-virtuoso").addEventListener("change", calcularComisiones);
+     document.getElementById("comision-smart").addEventListener("change", calcularComisiones);
      document.getElementById("comision-tarjeta-credito").addEventListener("change", calcularComisiones);
 
   // 3 Tool que calcula el Fee
@@ -283,7 +302,7 @@
   <h2>Herramientas de Cálculo</h2>
 
   <button class="boton4" id="Precios-button">Precios</button>
-  <button class="boton" id="Margen-button">Margenes</button>
+  <button class="boton" id="Margen-button">Mergenes</button>
   <button class="boton2" id="Comisión-button">Comisiones</button>
   <button class="boton3" id="Fee-button">Resort Fee</button>
 
@@ -293,7 +312,7 @@
     <input type="text" id="precio-venta" placeholder="Ingrese 'Subtotal($)' (ej. 100)">
     <br><br>
     <label for="utilidad">Utilidad sin IVA ($):</label>
-    <input type="text" id="utilidad" placeholder="Ingrese 'Ganancia total ($):' (ej. 20)">
+    <input type="text" id="utilidad" placeholder="Ingrese 'Ganancia - servicio ($)' (ej. 20)">
     <br><br>
     <label for="margen-utilidad">Margen de utilidad (%):</label>
     <input type="text" id="margen-utilidad" readonly>
@@ -313,6 +332,9 @@
     <h1>Cálculo de Comisiones</h1>
     <label for="venta-total">Precio Venta sin IVA ($):</label>
     <input type="text" id="venta-total" placeholder="Ingrese la Venta Total Sin IVA (ej. 1000)">
+    <br><br>
+    <label for="comision-agente">Comisión del Agente (%):</label>
+    <input type="text" id="comision-agente" placeholder="Ingrese el porcentaje de comisión del agente (ej. 10)">
     <br><br>
     <label for="comision-nuba">Comisión Nuba:</label>
     <select id="comision-nuba">
@@ -334,6 +356,16 @@
     <label for="porcentaje-comision-virtuoso">Porcentaje de Comisión Virtuoso (%):</label>
     <input type="text" id="porcentaje-comision-virtuoso" readonly>
     <br><br>
+    <label for="comision-tarjeta-credito">Comisión SmartFyer:</label>
+    <select id="comision-smart">
+      <option value="">Seleccione</option>
+      <option value="Sí">Sí</option>
+      <option value="No">No</option>
+    </select>
+    <br><br>
+    <label for="porcentaje-comision-smart">Porcentaje de SmartFlyer (%):</label>
+    <input type="text" id="porcentaje-comision-smart" readonly>
+    <br><br>
     <label for="comision-tarjeta-credito">Comisión Tarjeta de Crédito:</label>
     <select id="comision-tarjeta-credito">
       <option value="">Seleccione</option>
@@ -348,6 +380,10 @@
     <input type="text" id="venta-total-ajustada-sin-iva" readonly>
     <br><br>
     <h1>Líneas Adicionales</h1>
+    <label for="linea-adicional-comision-agente">Línea Adicional por Comisión Agente ($):</label>
+    <input type="text" id="linea-adicional-comision-agente" readonly>
+    <button class="boton-copia" data-input-id="linea-adicional-comision-agente">Copiar</button>
+    <br><br>
     <label for="linea-adicional-comision-nuba">Línea Adicional por Comisión Nuba ($):</label>
     <input type="text" id="linea-adicional-comision-nuba" readonly>
     <button class="boton-copia" data-input-id="linea-adicional-comision-nuba">Copiar</button>
@@ -355,6 +391,10 @@
     <label for="linea-adicional-comision-virtuoso">Línea Adicional por Comisión Virtuoso ($):</label>
     <input type="text" id="linea-adicional-comision-virtuoso" readonly>
     <button class="boton-copia" data-input-id="linea-adicional-comision-virtuoso">Copiar</button>
+    <br><br>
+    <label for="linea-adicional-comision-smart">Línea Adicional por Comisión SmartFlyer ($):</label>
+    <input type="text" id="linea-adicional-comision-smart" readonly>
+    <button class="boton-copia" data-input-id="linea-adicional-comision-smart">Copiar</button>
     <br><br>
     <label for="linea-adicional-comision-tarjeta-credito">Línea Adicional por Comisión Tarjeta de Crédito ($):</label>
     <input type="text" id="linea-adicional-comision-tarjeta-credito" readonly>
