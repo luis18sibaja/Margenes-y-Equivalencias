@@ -207,25 +207,35 @@
       }
 
 
-   // 4 Tool que calcula precios
-      const ventaTotalpInput = document.getElementById('venta-totalp');
-      const margenUtilidadpInput = document.getElementById('margen-utilidadp');
-      var sinIvaInput = document.getElementById('sin-iva');
-      var conIvaInput = document.getElementById('con-iva');
+  //4 Tool que calcula precios
+    const ventaTotalpInput = document.getElementById('venta-totalp');
+    const margenUtilidadpInput = document.getElementById('margen-utilidadp');
+    const impuestoServicioSelect = document.getElementById('impuesto-servicio');
+    var sinIvaInput = document.getElementById('sin-iva');
+    var conIvaInput = document.getElementById('con-iva');
 
-      ventaTotalpInput.addEventListener('input', calcularPrecios);
-      margenUtilidadpInput.addEventListener('input', calcularPrecios);
+    ventaTotalpInput.addEventListener('input', calcularPrecios);
+    margenUtilidadpInput.addEventListener('input', calcularPrecios);
+    impuestoServicioSelect.addEventListener('change', calcularPrecios);
 
-      function calcularPrecios() {
-        const ventaTotalp = parseFloat(ventaTotalpInput.value);
-        const margenUtilidadp = parseFloat(margenUtilidadpInput.value);
-        
-         var sinIva = ventaTotalp / (1 - (margenUtilidadp / 100));
-         var conIva = sinIva * 1.13;
+    function calcularPrecios() {
+       const ventaTotalp = parseFloat(ventaTotalpInput.value);
+       const margenUtilidadp = parseFloat(margenUtilidadpInput.value);
+       const impuestoServicio = impuestoServicioSelect.value;
 
-         sinIvaInput.value = sinIva.toFixed(2);
-         conIvaInput.value = conIva.toFixed(2);
-      }
+    var sinIva, conIva;
+
+    if (impuestoServicio === 'Sí') {
+        sinIva = ventaTotalp / (1 - (margenUtilidadp / 100));
+        conIva = (sinIva * 1.13) + (ventaTotalp * 0.10);
+    } else {
+        sinIva = ventaTotalp / (1 - (margenUtilidadp / 100));
+        conIva = sinIva * 1.13;
+    }
+
+        sinIvaInput.value = sinIva.toFixed(2);
+        conIvaInput.value = conIva.toFixed(2);
+    }
 
 
    // Botónes
@@ -440,6 +450,11 @@
     <label for="margen-utilidadp">Margen de utilidad (%):</label>
     <input type="text" id="margen-utilidadp">
     <br><br>
+    <label for="impuesto-servicio">¿Aplicar impuesto de servicio?</label>
+    <select id="impuesto-servicio">
+    <option value="Sí">Sí</option>
+    <option value="No">No</option>
+    </select>
     <label for="sin-iva">Precio Venta sin IVA ($):</label>
     <input type="text" id="sin-iva" readonly>
     <button class="boton-copia" data-input-id="sin-iva">Copiar</button>
